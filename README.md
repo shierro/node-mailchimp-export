@@ -1,4 +1,4 @@
-# Mailchimp Export API for NodeJS
+# Mailchimp Export API for NodeJS(0.10+)
 
 [![Build Status](https://travis-ci.org/shierro/node-mailchimp-export.svg?branch=master)](https://travis-ci.org/shierro/node-mailchimp-export)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f60e0883a1c98f548293/maintainability)](https://codeclimate.com/github/shierro/node-mailchimp-export/maintainability)
