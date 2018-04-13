@@ -6,11 +6,9 @@ Mailchimp api wrapper for the mailchimp export API v1
 `npm install --save https://github.com/shierro/node-mailchimp-export/tarball/master`
 
 ## Usage
-```
+```javascript
 const MailchimpExport = require('node-mailchimp-export');
-const mailchimpExport = new MailchimpExport({
-  apiKey: '' // your key here. this is required
-});
+const mailchimpExport = new MailchimpExport(YOUR_MAILCHIMP_API_KEY);
 
 /* Export list */
 mailchimpExport

@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax, no-prototype-builtins, no-useless-escape */
 const request = require('request-promise-native');
 
-const MailchimpExport = (apiKey) => {
+function MailchimpExport(apiKey) {
   const apiKeyRegex = /.+\-.+/;
 
   if (!apiKeyRegex.test(apiKey)) {
@@ -42,6 +42,6 @@ const MailchimpExport = (apiKey) => {
     const queryString = this.serializeObject({ ...params, apikey: this.apiKey });
     return request.get(`${this.baseUrl}/campaignSubscriberActivity?${queryString}`);
   };
-};
+}
 
 module.exports = MailchimpExport;
