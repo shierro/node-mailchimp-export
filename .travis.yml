@@ -8,6 +8,7 @@ dist: trusty
 addons:
   chrome: stable
 before_script:
+  - npm install -g codecov
   - yarn global add nyc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
@@ -17,9 +18,11 @@ script:
   - nyc --reporter=lcov yarn run cover
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code --debug $TRAVIS_TEST_RESULT
-  - ./cc-test-reporter format-coverage --output "coverage/coverage-final.json"
+  - ./cc-test-reporter format-coverage --output "coverage/codeclimate.$N.json" --debug
   - ./cc-test-reporter upload-coverage --debug
+  - ./cc-test-reporter after-build --exit-code --debug $TRAVIS_TEST_RESULT
+  - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
+  - codecov
 
 notifications:
   slack: ninjaro:clZjvDamAByBYA004CYcYlH6

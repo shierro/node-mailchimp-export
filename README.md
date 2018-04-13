@@ -1,5 +1,8 @@
 # Mailchimp Export API for NodeJS
 
+[![Build Status](https://travis-ci.org/shierro/node-mailchimp-export.svg?branch=master)](https://travis-ci.org/shierro/node-mailchimp-export)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f60e0883a1c98f548293/maintainability)](https://codeclimate.com/github/shierro/node-mailchimp-export/maintainability)
+
 Mailchimp api wrapper for the mailchimp export API v1
 
 ## Install from github(TODO: add NPM package)
