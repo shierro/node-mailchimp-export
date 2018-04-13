@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - 8.2.1
+  - 8.9.4
 dist: trusty
 addons:
   chrome: stable
@@ -16,6 +16,9 @@ script:
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter upload-coverage
 
 notifications:
-  email: true
+  slack: ninjaro:clZjvDamAByBYA004CYcYlH6
+  email:
+    - theodoro.pelingan@gmail.com
