@@ -24,10 +24,11 @@ mailchimpExport
     // optional – if, instead of full list data, you’d prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only “sha256” is supported.
     hashed: "hash" 
   })
-  .then((result) => {
-    // Do something with the list
+  .on('data', (chunk) => {
+    const list = JSON.parse(chunk.toString('utf8'));
+    // Do something with the JSON list
   })
-  .catch(console.error);
+  .on('error', console.error);
 
 /* Export campaignSubscriberActivity */
 mailchimpExport
@@ -39,10 +40,11 @@ mailchimpExport
     // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
     since: "YYYY-MM-DD HH:mm:ss"
   })
-  .then((result) => {
-    // Do something with result
+  .on('data', (chunk) => {
+    const subscriberActivities = JSON.parse(chunk.toString('utf8'));
+    // Do something with the JSON campaign activity by subscriber
   })
-  .catch(console.error);
+  .on('error', console.error);
 ```
 
 For an updated list of params, check the API Docs [here](http://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/#list-export)

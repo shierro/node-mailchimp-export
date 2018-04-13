@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax, no-prototype-builtins, no-useless-escape */
-const request = require('request-promise-native');
+const request = require('request');
 
 function MailchimpExport(apiKey) {
   const apiKeyRegex = /.+\-.+/;
