@@ -6,8 +6,8 @@
 
 Mailchimp api wrapper for the mailchimp export API v1
 
-## Install from github(TODO: add NPM package)
-`npm install --save https://github.com/shierro/node-mailchimp-export/tarball/master`
+## Install
+`npm install node-mailchimp-export --save`
 
 ## Usage
 ```javascript
