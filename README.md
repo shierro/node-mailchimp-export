@@ -28,6 +28,7 @@ mailchimpExport
     const list = JSON.parse(chunk.toString('utf8'));
     // Do something with the JSON list
   })
+  .on('complete', () => console.log('request completed!'))
   .on('error', console.error);
 
 /* Export campaignSubscriberActivity */
@@ -44,6 +45,7 @@ mailchimpExport
     const subscriberActivities = JSON.parse(chunk.toString('utf8'));
     // Do something with the JSON campaign activity by subscriber
   })
+  .on('complete', () => console.log('request completed!'))
   .on('error', console.error);
 ```
 
