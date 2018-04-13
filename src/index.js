@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax, no-prototype-builtins, no-useless-escape */
+/* eslint-disable no-restricted-syntax, no-prototype-builtins, no-useless-escape, guard-for-in */
 const request = require('request');
 
 function MailchimpExport(apiKey) {
@@ -14,9 +14,7 @@ function MailchimpExport(apiKey) {
   this.serializeObject = (obj) => {
     const str = [];
     for (const p in obj) {
-      if (obj.hasOwnProperty(p)) {
-        str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
-      }
+      str.push(`${encodeURIComponent(p)}=${encodeURIComponent(obj[p])}`);
     }
     return str.join('&');
   };
