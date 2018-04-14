@@ -1,5 +1,7 @@
 # Mailchimp Export API for NodeJS(4.0+)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/shierro/node-mailchimp-export.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/shierro/node-mailchimp-export.svg?branch=master)](https://travis-ci.org/shierro/node-mailchimp-export)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f60e0883a1c98f548293/maintainability)](https://codeclimate.com/github/shierro/node-mailchimp-export/maintainability)
 [![codecov](https://codecov.io/gh/shierro/node-mailchimp-export/branch/master/graph/badge.svg)](https://codecov.io/gh/shierro/node-mailchimp-export)
