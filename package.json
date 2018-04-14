@@ -1,8 +1,8 @@
 {
   "name": "node-mailchimp-export",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Mailchimp api wrapper for the mailchimp export API v1",
-  "main": "./dist/index.js",
+  "main": "./lib/index.js",
   "engines": {
     "node": ">=4"
   },
@@ -14,8 +14,7 @@
     "cover": "cross-env NODE_ENV=test nyc mocha --recursive --exit ./src/",
     "postcover": "cp coverage/coverage-final.json coverage/coverage.json",
     "nsp": "./node_modules/.bin/nsp check --output summary",
-    "prebuild": "mkdir -p dist",
-    "build": "babel --plugins transform-object-rest-spread ./src/index.js --out-file ./dist/index.js"
+    "build": "babel --plugins transform-object-rest-spread ./src/index.js --out-file ./lib/index.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +32,7 @@
     "eslint-config-airbnb-base": "^12.0.1",
     "eslint-plugin-import": "^2.9.0",
     "mocha": "^4.1.0",
+    "nock": "^9.2.5",
     "nsp": "^3.2.1",
     "nyc": "^11.5.0",
     "pre-commit": "^1.2.2",

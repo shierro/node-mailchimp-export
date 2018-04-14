@@ -1,8 +1,11 @@
 # Mailchimp Export API for NodeJS(4.0+)
 
+[![npm version](https://badge.fury.io/js/node-mailchimp-export.svg)](https://badge.fury.io/js/node-mailchimp-export)
 [![Build Status](https://travis-ci.org/shierro/node-mailchimp-export.svg?branch=master)](https://travis-ci.org/shierro/node-mailchimp-export)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f60e0883a1c98f548293/maintainability)](https://codeclimate.com/github/shierro/node-mailchimp-export/maintainability)
 [![codecov](https://codecov.io/gh/shierro/node-mailchimp-export/branch/master/graph/badge.svg)](https://codecov.io/gh/shierro/node-mailchimp-export)
+[![dependency status](https://david-dm.org/clux/node-mailchimp-export.svg)](https://david-dm.org/clux/node-mailchimp-export)
+[![NPM](https://nodei.co/npm/node-mailchimp-export.png)](https://nodei.co/npm/node-mailchimp-export/)
 
 Mailchimp api wrapper for the mailchimp export API v1
 
@@ -14,9 +17,9 @@ Mailchimp api wrapper for the mailchimp export API v1
 const MailchimpExport = require('node-mailchimp-export');
 const mailchimpExport = new MailchimpExport(YOUR_MAILCHIMP_API_KEY);
 
-/* Export list */
+/* Export list members in a single JSON */
 mailchimpExport
-  .list({
+  .listMembers({
     // required - the list id to get members from
     id: "ListID",
     // optional – the status to get members for - one of (subscribed, unsubscribed, cleaned), defaults to subscribed
@@ -28,12 +31,10 @@ mailchimpExport
     // optional – if, instead of full list data, you’d prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only “sha256” is supported.
     hashed: "hash" 
   })
-  .on('data', (chunk) => {
-    const list = JSON.parse(chunk.toString('utf8'));
-    // Do something with the JSON list
+  .then((listMembers) => {
+    // Do something with list members
   })
-  .on('complete', () => console.log('request completed!'))
-  .on('error', console.error);
+  .catch(console.error);
 
 /* Export campaignSubscriberActivity */
 mailchimpExport
@@ -46,11 +47,26 @@ mailchimpExport
     since: "YYYY-MM-DD HH:mm:ss"
   })
   .on('data', (chunk) => {
-    const subscriberActivities = JSON.parse(chunk.toString('utf8'));
-    // Do something with the JSON campaign activity by subscriber
+    const subscriber = JSON.parse(chunk.toString('utf8'));
+    // Do something with the JSON subscriber
   })
   .on('complete', () => console.log('request completed!'))
   .on('error', console.error);
+
+/* Export campaignSubscriberActivity in a in a single JSON Object */
+mailchimpExport
+  .campaignSubscriberActivityBulk({
+    // required - the campaign id to get subscriber activity from
+    id: "CampaignID",
+    // optional – if set to “true” a record for every email address sent to will be returned even if there is no activity data. defaults to “false”
+    include_empty: "true|false",
+    // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
+    since: "YYYY-MM-DD HH:mm:ss"
+  })
+  .then((subscriberList) => {
+    // Do something with subscriber list
+  });
+
 ```
 
 For an updated list of params, check the API Docs [here](http://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/#list-export)
