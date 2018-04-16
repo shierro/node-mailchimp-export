@@ -68,8 +68,8 @@ class MailchimpExport {
       this.getFromExportApi('campaignSubscriberActivity', params)
         .on('data', buffer => rawArray.push(buffer.toString('utf8')))
         .on('complete', () => {
-          const rawString = rawArray.join('');
-          const subscribers = rawString.trim().split(`\n`).map(JSON.parse);
+          const rawString = rawArray.join('').trim();
+          const subscribers = !rawString ? [] : rawString.split('\n').map(JSON.parse);
           return resolve(subscribers);
         })
         .on('error', reject);
