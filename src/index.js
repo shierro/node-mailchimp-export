@@ -57,10 +57,7 @@ class MailchimpExport {
           const parsedChunk = chunk.toString('utf8');
           rawList += parsedChunk;
         })
-        .on('complete', () => {
-          require('fs').writeFileSync('listMembers.txt', rawList);
-          return resolve(this.parseRawList(rawList.trim()));
-        })
+        .on('complete', () => resolve(this.parseRawList(rawList.trim())))
         .on('error', reject);
     });
   }
