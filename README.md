@@ -14,6 +14,12 @@ Mailchimp api wrapper for the mailchimp export API v1
 ## Install
 `npm install node-mailchimp-export --save`
 
+## Available functions
+*name* | `description` 
+--- | ---
+listMembers | Export list members in a single JSON
+campaignSubscriberActivity | Get subscribers w/activity in a JSON array
+
 ## Usage
 ```javascript
 const MailchimpExport = require('node-mailchimp-export');
@@ -31,33 +37,16 @@ mailchimpExport
     // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
     since: "YYYY-MM-DD HH:mm:ss",
     // optional – if, instead of full list data, you’d prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only “sha256” is supported.
-    hashed: "hash" 
+    hashed: "hash"
   })
   .then((listMembers) => {
     // Do something with list members
   })
   .catch(console.error);
 
-/* Export campaignSubscriberActivity */
+/* Export campaignSubscriberActivity - Get a single JSON Object */
 mailchimpExport
   .campaignSubscriberActivity({
-    // required - the campaign id to get subscriber activity from
-    id: "CampaignID",
-    // optional – if set to “true” a record for every email address sent to will be returned even if there is no activity data. defaults to “false”
-    include_empty: "true|false",
-    // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
-    since: "YYYY-MM-DD HH:mm:ss"
-  })
-  .on('data', (chunk) => {
-    const subscriber = JSON.parse(chunk.toString('utf8'));
-    // Do something with the JSON subscriber
-  })
-  .on('complete', () => console.log('request completed!'))
-  .on('error', console.error);
-
-/* Export campaignSubscriberActivity in a in a single JSON Object */
-mailchimpExport
-  .campaignSubscriberActivityBulk({
     // required - the campaign id to get subscriber activity from
     id: "CampaignID",
     // optional – if set to “true” a record for every email address sent to will be returned even if there is no activity data. defaults to “false”

@@ -42,26 +42,13 @@ describe('src/index.js - Usage', () => {
     response.then(() => done());
   });
 
-  it('should export campaign subscribers successfully on bulk', (done) => {
-    nock('https://us17.api.mailchimp.com')
-      .get('/export/1.0/campaignSubscriberActivity?id=campaignIdBulk&apikey=testToken-us17')
-      .reply(200, rawSubscribers);
-    const response = mailchimpExport.campaignSubscriberActivityBulk({ id: 'campaignIdBulk' });
-    expect(typeof response).to.equal('object');
-    expect(response.then).is.a('function');
-    response.then(() => done());
-    response.catch(done);
-  });
-
-  it('should should export campaign subscribers successfully', (done) => {
+  it('should should export campaign subscribers successfully', () => {
     nock('https://us17.api.mailchimp.com')
       .get('/export/1.0/campaignSubscriberActivity?id=campaignId&apikey=testToken-us17')
       .reply(200, rawSubscribers);
     const requestObject = mailchimpExport.campaignSubscriberActivity({ id: 'campaignId' });
     expect(typeof requestObject).to.equal('object');
-    expect(requestObject).to.contain.keys(['__isRequestRequest', 'httpModule', 'agent']);
-    requestObject.on('complete', () => done());
-    requestObject.on('error', done);
+    expect(requestObject.then).to.be.a('function');
   });
 
   it('should throw error when validation params is not an object', () => {

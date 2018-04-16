@@ -1,6 +1,6 @@
 {
   "name": "node-mailchimp-export",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Mailchimp api wrapper for the mailchimp export API v1",
   "main": "./lib/index.js",
   "engines": {

@@ -1,4 +1,10 @@
-/* eslint-disable no-restricted-syntax, no-prototype-builtins, no-useless-escape, guard-for-in */
+/*
+  eslint-disable no-restricted-syntax,
+  no-prototype-builtins,
+  no-useless-escape,
+  guard-for-in,
+  quotes
+*/
 const request = require('request');
 
 class MailchimpExport {
@@ -60,15 +66,15 @@ class MailchimpExport {
   }
 
   campaignSubscriberActivity(params) {
-    return this.getFromExportApi('campaignSubscriberActivity', params);
-  }
-
-  campaignSubscriberActivityBulk(params) {
     return new Promise((resolve, reject) => {
-      const subscriberList = [];
+      const rawArray = [];
       this.getFromExportApi('campaignSubscriberActivity', params)
-        .on('data', chunk => subscriberList.push(JSON.parse(chunk.toString('utf8'))))
-        .on('complete', () => resolve(subscriberList))
+        .on('data', buffer => rawArray.push(buffer.toString('utf8')))
+        .on('complete', () => {
+          const rawString = rawArray.join('');
+          const subscribers = rawString.trim().split(`\n`).map(JSON.parse);
+          return resolve(subscribers);
+        })
         .on('error', reject);
     });
   }
