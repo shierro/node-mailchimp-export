@@ -7,6 +7,7 @@
 [![codecov](https://codecov.io/gh/shierro/node-mailchimp-export/branch/master/graph/badge.svg)](https://codecov.io/gh/shierro/node-mailchimp-export)
 [![dependency status](https://david-dm.org/shierro/node-mailchimp-export/status.svg)](https://david-dm.org/shierro/node-mailchimp-export/status.svg)
 [![devDependency status](https://david-dm.org/shierro/node-mailchimp-export/dev-status.svg)](https://david-dm.org/shierro/node-mailchimp-export/dev-status.svg)
+
 [![NPM](https://nodei.co/npm/node-mailchimp-export.png)](https://nodei.co/npm/node-mailchimp-export/)
 
 Mailchimp api wrapper for the mailchimp export API v1
@@ -57,7 +58,6 @@ mailchimpExport
   .then((subscriberList) => {
     // Do something with subscriber list
   });
-
 ```
 
 For an updated list of params, check the API Docs [here](http://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/#list-export)
