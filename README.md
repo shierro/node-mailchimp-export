@@ -7,6 +7,7 @@
 [![codecov](https://codecov.io/gh/shierro/node-mailchimp-export/branch/master/graph/badge.svg)](https://codecov.io/gh/shierro/node-mailchimp-export)
 [![dependency status](https://david-dm.org/shierro/node-mailchimp-export/status.svg)](https://david-dm.org/shierro/node-mailchimp-export/status.svg)
 [![devDependency status](https://david-dm.org/shierro/node-mailchimp-export/dev-status.svg)](https://david-dm.org/shierro/node-mailchimp-export/dev-status.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/shierro/node-mailchimp-export/badge.svg)](https://snyk.io/test/github/shierro/node-mailchimp-export)
 
 [![NPM](https://nodei.co/npm/node-mailchimp-export.png)](https://nodei.co/npm/node-mailchimp-export/)
 
