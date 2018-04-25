@@ -31,11 +31,16 @@ describe('src/index.js - Usage', () => {
     '["test@gmail.com","","","","",2,"2018-04-13 10:57:02",null,"2018-04-13 10:57:02","13.210.204.207",null,null,null,null,null,null,null,"2018-04-13 10:57:02","45967475","3b0a62b412",null]\n' +
     '["test2@gmail.com","","","","",2,"2018-04-13 10:57:02",null,"2018-04-13 10:57:02","13.210.204.207",null,null,null,null,null,null,null,"2018-04-13 10:57:02","45967475","3b0a62b412",null]';
   const rawSubscribers = '{"test@gmail.com":[{"action":"open","timestamp":"2018-04-08 09:01:27","url":null,"ip":"66.249.82.127"},{"action":"open","timestamp":"2018-04-09 02:42:31","url":null,"ip":"66.249.82.169"}]}';
+  nock('https://us17.api.mailchimp.com')
+    .persist()
+    .get('/export/1.0/list?id=listId&apikey=testToken-us17')
+    .reply(200, rawList);
+  nock('https://us17.api.mailchimp.com')
+    .persist()
+    .get('/export/1.0/campaignSubscriberActivity?id=campaignId&apikey=testToken-us17')
+    .reply(200, rawSubscribers);
 
   it('should return a promise successfully when listMembers is called', (done) => {
-    nock('https://us17.api.mailchimp.com')
-      .get('/export/1.0/list?id=listId&apikey=testToken-us17')
-      .reply(200, rawList);
     const response = mailchimpExport.listMembers({ id: 'listId' });
     expect(typeof response).to.equal('object');
     expect(response.then).is.a('function');
@@ -43,18 +48,12 @@ describe('src/index.js - Usage', () => {
   });
 
   it('should return a request/request object listMembersRaw is called & complete', (done) => {
-    nock('https://us17.api.mailchimp.com')
-      .get('/export/1.0/list?id=listIdRaw&apikey=testToken-us17')
-      .reply(200, rawList);
-    const requestObject = mailchimpExport.listMembersRaw({ id: 'listIdRaw' });
+    const requestObject = mailchimpExport.listMembersRaw({ id: 'listId' });
     expect(requestObject).to.contain.keys(['__isRequestRequest', 'httpModule', 'agent']);
     requestObject.on('complete', () => done());
   });
 
   it('should should export campaign subscribers successfully', () => {
-    nock('https://us17.api.mailchimp.com')
-      .get('/export/1.0/campaignSubscriberActivity?id=campaignId&apikey=testToken-us17')
-      .reply(200, rawSubscribers);
     const requestObject = mailchimpExport.campaignSubscriberActivity({ id: 'campaignId' });
     expect(typeof requestObject).to.equal('object');
     expect(requestObject.then).to.be.a('function');
@@ -70,10 +69,7 @@ describe('src/index.js - Usage', () => {
   });
 
   it('should return a request/request object campaignSubscriberActivity is called & complete', (done) => {
-    nock('https://us17.api.mailchimp.com')
-      .get('/export/1.0/campaignSubscriberActivity?id=campaignIdRaw&apikey=testToken-us17')
-      .reply(200, rawSubscribers);
-    const requestObject = mailchimpExport.campaignSubscriberActivityRaw({ id: 'campaignIdRaw' });
+    const requestObject = mailchimpExport.campaignSubscriberActivityRaw({ id: 'campaignId' });
     expect(requestObject).to.contain.keys(['__isRequestRequest', 'httpModule', 'agent']);
     requestObject.on('complete', () => done());
   });
