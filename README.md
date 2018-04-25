@@ -20,11 +20,14 @@ Mailchimp api wrapper for the mailchimp export API v1
 *name* | `description` 
 --- | ---
 listMembers | Export list members in a single JSON
+listMembersRaw | Export list members & return a [request/request](https://github.com/request/request) object
 campaignSubscriberActivity | Get subscribers w/activity in a JSON array
+campaignSubscriberActivityRaw | Get subscribers w/activity & return a [request/request](https://github.com/request/request) object
 
 ## Usage
 ```javascript
 const MailchimpExport = require('node-mailchimp-export');
+const fs = require('fs');
 const mailchimpExport = new MailchimpExport(YOUR_MAILCHIMP_API_KEY);
 
 /* Export list members in a single JSON */
@@ -46,6 +49,22 @@ mailchimpExport
   })
   .catch(console.error);
 
+/* Export list members & return a request/request object */
+mailchimpExport
+  .listMembersRaw({
+    // required - the list id to get members from
+    id: "ListID",
+    // optional – the status to get members for - one of (subscribed, unsubscribed, cleaned), defaults to subscribed
+    status: "subscribed|unsubscribed|cleaned",
+    // optional – pull only a certain Segment of your list.
+    segment: "SEGMENT",
+    // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
+    since: "YYYY-MM-DD HH:mm:ss",
+    // optional – if, instead of full list data, you’d prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only “sha256” is supported.
+    hashed: "hash"
+  })
+  .pipe(fs.createWriteStream('yourRawListMembers.txt'));
+
 /* Export campaignSubscriberActivity - Get a single JSON Object */
 mailchimpExport
   .campaignSubscriberActivity({
@@ -59,6 +78,20 @@ mailchimpExport
   .then((subscriberList) => {
     // Do something with subscriber list
   });
+
+  /* Export campaignSubscriberActivity - Get a request/request object */
+  mailchimpExport
+    .campaignSubscriberActivityRaw({
+      // required - the campaign id to get subscriber activity from
+      id: "CampaignID",
+      // optional – if set to “true” a record for every email address sent to will be returned even if there is no activity data. defaults to “false”
+      include_empty: "true|false",
+      // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
+      since: "YYYY-MM-DD HH:mm:ss"
+    })
+    .pipe(fs.createWriteStream('yourRawCampaignSubscriberActivities.txt'));
 ```
+
+For more info on other ways to pipe the data, [check this](https://github.com/request/request#streaming)
 
 For an updated list of params, check the API Docs [here](http://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/#list-export)

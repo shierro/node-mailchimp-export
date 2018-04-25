@@ -42,6 +42,15 @@ describe('src/index.js - Usage', () => {
     response.then(() => done());
   });
 
+  it('should return a request/request object listMembersRaw is called & complete', (done) => {
+    nock('https://us17.api.mailchimp.com')
+      .get('/export/1.0/list?id=listIdRaw&apikey=testToken-us17')
+      .reply(200, rawList);
+    const requestObject = mailchimpExport.listMembersRaw({ id: 'listIdRaw' });
+    expect(requestObject).to.contain.keys(['__isRequestRequest', 'httpModule', 'agent']);
+    requestObject.on('complete', () => done());
+  });
+
   it('should should export campaign subscribers successfully', () => {
     nock('https://us17.api.mailchimp.com')
       .get('/export/1.0/campaignSubscriberActivity?id=campaignId&apikey=testToken-us17')
@@ -49,6 +58,24 @@ describe('src/index.js - Usage', () => {
     const requestObject = mailchimpExport.campaignSubscriberActivity({ id: 'campaignId' });
     expect(typeof requestObject).to.equal('object');
     expect(requestObject.then).to.be.a('function');
+  });
+
+  it('should should export campaign subscribers successfully w/empty data', () => {
+    nock('https://us17.api.mailchimp.com')
+      .get('/export/1.0/campaignSubscriberActivity?id=emptyCampaignId&apikey=testToken-us17')
+      .reply(200, '');
+    const requestObject = mailchimpExport.campaignSubscriberActivity({ id: 'emptyCampaignId' });
+    expect(typeof requestObject).to.equal('object');
+    expect(requestObject.then).to.be.a('function');
+  });
+
+  it('should return a request/request object campaignSubscriberActivity is called & complete', (done) => {
+    nock('https://us17.api.mailchimp.com')
+      .get('/export/1.0/campaignSubscriberActivity?id=campaignIdRaw&apikey=testToken-us17')
+      .reply(200, rawSubscribers);
+    const requestObject = mailchimpExport.campaignSubscriberActivityRaw({ id: 'campaignIdRaw' });
+    expect(requestObject).to.contain.keys(['__isRequestRequest', 'httpModule', 'agent']);
+    requestObject.on('complete', () => done());
   });
 
   it('should throw error when validation params is not an object', () => {

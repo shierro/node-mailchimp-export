@@ -49,6 +49,14 @@ class MailchimpExport {
     });
   }
 
+  listMembersRaw(params) {
+    return this.getFromExportApi('list', params);
+  }
+
+  campaignSubscriberActivityRaw(params) {
+    return this.getFromExportApi('campaignSubscriberActivity', params);
+  }
+
   listMembers(params) {
     return new Promise((resolve, reject) => {
       let rawList = '';
