@@ -3,7 +3,8 @@
   no-prototype-builtins,
   no-useless-escape,
   guard-for-in,
-  quotes
+  quotes,
+  import/no-cycle
 */
 const request = require('request');
 

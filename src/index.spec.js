@@ -1,7 +1,7 @@
-/* eslint-disable no-underscore-dangle */
-const MailchimpExport = require('./index');
+/* eslint-disable no-underscore-dangle, import/no-cycle */
 const { expect } = require('chai');
 const nock = require('nock');
+const MailchimpExport = require('./index');
 
 describe('src/index.js - Instance', () => {
   it('should create new instance without fail', () => {
@@ -26,10 +26,9 @@ describe('src/index.js - Instance', () => {
 describe('src/index.js - Usage', () => {
   const MAILCHIMP_TOKEN = 'testToken-us17';
   const mailchimpExport = new MailchimpExport(MAILCHIMP_TOKEN);
-  const rawList =
-    '["Email Address","First Name","Last Name","Address","Phone Number","MEMBER_RATING","OPTIN_TIME","OPTIN_IP","CONFIRM_TIME","CONFIRM_IP","LATITUDE","LONGITUDE","GMTOFF","DSTOFF","TIMEZONE","CC","REGION","LAST_CHANGED","LEID","EUID","NOTES"]\n' +
-    '["test@gmail.com","","","","",2,"2018-04-13 10:57:02",null,"2018-04-13 10:57:02","13.210.204.207",null,null,null,null,null,null,null,"2018-04-13 10:57:02","45967475","3b0a62b412",null]\n' +
-    '["test2@gmail.com","","","","",2,"2018-04-13 10:57:02",null,"2018-04-13 10:57:02","13.210.204.207",null,null,null,null,null,null,null,"2018-04-13 10:57:02","45967475","3b0a62b412",null]';
+  const rawList = '["Email Address","First Name","Last Name","Address","Phone Number","MEMBER_RATING","OPTIN_TIME","OPTIN_IP","CONFIRM_TIME","CONFIRM_IP","LATITUDE","LONGITUDE","GMTOFF","DSTOFF","TIMEZONE","CC","REGION","LAST_CHANGED","LEID","EUID","NOTES"]\n'
+    + '["test@gmail.com","","","","",2,"2018-04-13 10:57:02",null,"2018-04-13 10:57:02","13.210.204.207",null,null,null,null,null,null,null,"2018-04-13 10:57:02","45967475","3b0a62b412",null]\n'
+    + '["test2@gmail.com","","","","",2,"2018-04-13 10:57:02",null,"2018-04-13 10:57:02","13.210.204.207",null,null,null,null,null,null,null,"2018-04-13 10:57:02","45967475","3b0a62b412",null]';
   const rawSubscribers = '{"test@gmail.com":[{"action":"open","timestamp":"2018-04-08 09:01:27","url":null,"ip":"66.249.82.127"},{"action":"open","timestamp":"2018-04-09 02:42:31","url":null,"ip":"66.249.82.169"}]}';
   nock('https://us17.api.mailchimp.com')
     .persist()

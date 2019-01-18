@@ -7,6 +7,7 @@
     "ecmaVersion": 8,
     "sourceType": "module"
   },
+  "parser": "babel-eslint",
   "globals": {
     "describe": true,
     "beforeEach": true,

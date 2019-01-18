@@ -11,7 +11,7 @@
 
 [![NPM](https://nodei.co/npm/node-mailchimp-export.png)](https://nodei.co/npm/node-mailchimp-export/)
 
-Mailchimp api wrapper for the mailchimp export API v1
+Mailchimp api wrapper for the [mailchimp export API v1](https://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/)
 
 ## Install
 `npm install node-mailchimp-export --save`
