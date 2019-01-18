@@ -46,8 +46,8 @@ describe('src/index.js - Usage', () => {
     response.then(() => done());
   });
 
-  it('should return a request/request object listMembersRaw is called & complete', (done) => {
-    const requestObject = mailchimpExport.listMembersRaw({ id: 'listId' });
+  it('should return a request/request object listMembers w/ option [raw=true] is called & complete', (done) => {
+    const requestObject = mailchimpExport.listMembers({ id: 'listId', raw: true });
     expect(requestObject).to.contain.keys(['__isRequestRequest', 'httpModule', 'agent']);
     requestObject.on('complete', () => done());
   });
@@ -67,8 +67,8 @@ describe('src/index.js - Usage', () => {
     expect(requestObject.then).to.be.a('function');
   });
 
-  it('should return a request/request object campaignSubscriberActivity is called & complete', (done) => {
-    const requestObject = mailchimpExport.campaignSubscriberActivityRaw({ id: 'campaignId' });
+  it('should return a request/request object campaignSubscriberActivity w/ option [raw=true] is called & complete', (done) => {
+    const requestObject = mailchimpExport.campaignSubscriberActivity({ id: 'campaignId', raw: true });
     expect(requestObject).to.contain.keys(['__isRequestRequest', 'httpModule', 'agent']);
     requestObject.on('complete', () => done());
   });

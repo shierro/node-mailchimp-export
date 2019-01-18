@@ -50,15 +50,12 @@ class MailchimpExport {
     });
   }
 
-  listMembersRaw(params) {
-    return this.getFromExportApi('list', params);
-  }
-
-  campaignSubscriberActivityRaw(params) {
-    return this.getFromExportApi('campaignSubscriberActivity', params);
-  }
-
   listMembers(params) {
+    if (params.raw) {
+      const apiParams = Object.assign({}, params);
+      delete apiParams.raw;
+      return this.getFromExportApi('list', apiParams);
+    }
     return new Promise((resolve, reject) => {
       let rawList = '';
       this.getFromExportApi('list', params)
@@ -72,6 +69,11 @@ class MailchimpExport {
   }
 
   campaignSubscriberActivity(params) {
+    if (params.raw) {
+      const apiParams = Object.assign({}, params);
+      delete apiParams.raw;
+      return this.getFromExportApi('campaignSubscriberActivity', apiParams);
+    }
     return new Promise((resolve, reject) => {
       const rawArray = [];
       this.getFromExportApi('campaignSubscriberActivity', params)

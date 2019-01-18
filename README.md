@@ -11,7 +11,22 @@
 
 [![NPM](https://nodei.co/npm/node-mailchimp-export.png)](https://nodei.co/npm/node-mailchimp-export/)
 
-Mailchimp api wrapper for the [mailchimp export API v1](https://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/)
+Mailchimp api wrapper for the [mailchimp export API v1](https://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/) using [request/request](https://github.com/request/request) library.
+
+## Breaking change
+- On V4+, functionName+"raw" is removed. raw is now an option.
+
+
+```javascript
+// Easily migrate 
+
+// FROM 
+mailchimpExport.listMembersRaw({ /* params */ });
+// TO
+mailchimpExport.listMembers({ raw: true /* other params */ });
+```
+
+
 
 ## Install
 `npm install node-mailchimp-export --save`
@@ -20,9 +35,7 @@ Mailchimp api wrapper for the [mailchimp export API v1](https://developer.mailch
 *name* | `description` 
 --- | ---
 listMembers | Export list members in a single JSON
-listMembersRaw | Export list members & return a [request/request](https://github.com/request/request) object
 campaignSubscriberActivity | Get subscribers w/activity in a JSON array
-campaignSubscriberActivityRaw | Get subscribers w/activity & return a [request/request](https://github.com/request/request) object
 
 ## Usage
 ```javascript
@@ -42,28 +55,14 @@ mailchimpExport
     // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
     since: "YYYY-MM-DD HH:mm:ss",
     // optional – if, instead of full list data, you’d prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only “sha256” is supported.
-    hashed: "hash"
+    hashed: "hash",
+    // optional - return a request/request object w/o any parsing. be careful when using, since it does not return a promise but a request/request object. default: false
+    raw: false
   })
   .then((listMembers) => {
-    // Do something with list members
+    // Do something with list members. NOTE: don't use then/catch when option:raw is true
   })
   .catch(console.error);
-
-/* Export list members & return a request/request object */
-mailchimpExport
-  .listMembersRaw({
-    // required - the list id to get members from
-    id: "ListID",
-    // optional – the status to get members for - one of (subscribed, unsubscribed, cleaned), defaults to subscribed
-    status: "subscribed|unsubscribed|cleaned",
-    // optional – pull only a certain Segment of your list.
-    segment: "SEGMENT",
-    // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
-    since: "YYYY-MM-DD HH:mm:ss",
-    // optional – if, instead of full list data, you’d prefer a hashed list of email addresses, set this to the hashing algorithm you expect. Currently only “sha256” is supported.
-    hashed: "hash"
-  })
-  .pipe(fs.createWriteStream('yourRawListMembers.txt'));
 
 /* Export campaignSubscriberActivity - Get a single JSON Object */
 mailchimpExport
@@ -73,21 +72,29 @@ mailchimpExport
     // optional – if set to “true” a record for every email address sent to will be returned even if there is no activity data. defaults to “false”
     include_empty: "true|false",
     // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
-    since: "YYYY-MM-DD HH:mm:ss"
+    since: "YYYY-MM-DD HH:mm:ss",
+    // optional - return a request/request object w/o any parsing. default: false
+    raw: false
   })
   .then((subscriberList) => {
-    // Do something with subscriber list
+    // Do something with subscriber list. NOTE: don't use then/catch when option:raw is true
   });
+```
 
-  /* Export campaignSubscriberActivity - Get a request/request object */
+### Example usage wih option: raw
+
+```javascript
+  /* Export campaignSubscriberActivity - Get a request/request object w/ option [raw=true] */
   mailchimpExport
-    .campaignSubscriberActivityRaw({
+    .campaignSubscriberActivity({
       // required - the campaign id to get subscriber activity from
       id: "CampaignID",
       // optional – if set to “true” a record for every email address sent to will be returned even if there is no activity data. defaults to “false”
       include_empty: "true|false",
       // optional – only return member whose data has changed since a GMT timestamp – in YYYY-MM-DD HH:mm:ss format
-      since: "YYYY-MM-DD HH:mm:ss"
+      since: "YYYY-MM-DD HH:mm:ss",
+      // optional - return a request/request object w/o any parsing. be careful when using, since it does not return a promise but a request/request object. defaults to “false”
+      raw: true
     })
     .pipe(fs.createWriteStream('yourRawCampaignSubscriberActivities.txt'));
 ```

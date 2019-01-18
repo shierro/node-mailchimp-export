@@ -1,6 +1,6 @@
 {
   "name": "node-mailchimp-export",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Mailchimp api wrapper for the mailchimp export API v1",
   "main": "./lib/index.js",
   "engines": {
@@ -27,7 +27,7 @@
     "url": "https://github.com/shierro/node-mailchimp-export"
   },
   "author": "Theodoro S. Pelingan Jr.",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
