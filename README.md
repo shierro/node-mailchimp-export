@@ -14,7 +14,7 @@
 Mailchimp api wrapper for the [mailchimp export API v1](https://developer.mailchimp.com/documentation/mailchimp/guides/how-to-use-the-export-api/) using [request/request](https://github.com/request/request) library.
 
 ## Breaking change
-- On V4+, functionName+"raw" is removed. raw is now an option.
+- On V0.4+, functionName+"raw" is removed. raw is now an option.
 
 
 ```javascript
